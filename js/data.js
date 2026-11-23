@@ -185,12 +185,23 @@ window.SITE = {
     products: ["cloud-diary", "puffy-hearts", "washi-trio", "postcard-set", "apple-of-my-eye", "star-collector"],
   },
 
-  // Big banners on the homepage (images in images/banners/)
+  // Big banners on the homepage. They're built in the page (not pictures), so the
+  // words, buttons and photos can all be changed here.
+  // layout: "welcome" | "sale" | "collection" | "gallery"
+  // A banner can also just be a picture: { image: "images/banners/x.jpg", link, alt, caption }
   banners: [
-    { image: "images/banners/welcome.jpg", link: "shop.html", alt: "Welcome to Sentimental Apple. Make room for making.", caption: "welcome to the club ♡" },
-    { image: "images/banners/sale.jpg", link: "shop.html?col=our-favourites", alt: "Sale is live. Grab your faves now at a discount.", caption: "the sale is on, babe" },
-    { image: "images/banners/cutest-collection.jpg", link: "shop.html", alt: "The cutest collection of products. Shop now.", caption: "the cutest collection yet" },
-    { image: "images/banners/gallery.jpg", link: "index.html#camera", alt: "Hey beautiful, check out our gallery.", caption: "peek at our camera roll" },
+    { layout: "welcome", link: "shop.html", caption: "welcome to the club ♡",
+      kicker: "welcome to", tagline: "make room for making", button: "explore now!",
+      ribbon: "stationery · creative experiences · community",
+      photos: ["images/banners/photos/welcome-1.jpg", "images/banners/photos/welcome-2.jpg"] },
+    { layout: "sale", link: "shop.html?col=our-favourites", caption: "the sale is on, babe",
+      script: "Sale is live", title: "Grab your faves now at a discount!", button: "shop now",
+      photos: ["images/banners/photos/sale-1.jpg", "images/banners/photos/sale-2.jpg"] },
+    { layout: "collection", link: "shop.html", caption: "the cutest collection yet",
+      title: "The cutest collection", script: "of Products", text: "Find the most charming collection of matcha-inspired products here!", button: "shop now" },
+    { layout: "gallery", link: "index.html#camera", caption: "peek at our camera roll",
+      kicker: "Hey beautiful", title: "Check out our", script: "Gallery", text: "Find the most charming collection of our stationery here!", button: "view now",
+      photos: ["images/banners/photos/gallery-1.jpg"] },
   ],
 
   // Little promises shown with the brand icons (images in images/icons/)

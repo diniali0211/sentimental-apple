@@ -150,24 +150,95 @@
       $("[data-cats]").innerHTML = S.categories.map((c) => `
         <a class="hm-cat" href="shop.html?cat=${esc(c.id)}"><span class="hm-cat__pic" style="background:${COLOR[c.color] || "#f177ae"}2e">${svgArt(CAT_ART[c.id] || c.icon, COLOR[c.color] || "#f177ae", "sticker")}</span><b>${esc(c.name)}</b></a>`).join("");
 
-      /* ---------- 2. banners ---------- */
+      /* ---------- 2. banners (built in the page; words and photos in data.js → banners) ---------- */
       {
         const B = S.banners || [];
         const track = $("[data-track]"), dots = $("[data-bdots]");
-        track.innerHTML = B.map((b, i) => `<a href="${esc(b.link)}" ${i ? 'tabindex="-1"' : ""}><img src="${esc(b.image)}" alt="${esc(b.alt)}" ${i ? 'loading="lazy"' : ""}></a>`).join("");
+        // hand-drawn outline bow and a four-point sparkle
+        const bow = (cls) => `<svg class="bn-bow ${cls}" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 40C40 22 14 12 10 26s16 26 40 14zM50 40c10-18 36-28 40-14S74 52 50 40z" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linejoin="round"/><path d="M47 44C40 60 30 76 22 92M53 44c7 16 17 32 25 48" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/><circle cx="50" cy="40" r="6" fill="currentColor"/></svg>`;
+        const spark = (cls) => `<svg class="bn-spark ${cls}" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2c5 32 16 43 48 48-32 5-43 16-48 48-5-32-16-43-48-48 32-5 43-16 48-48z" fill="currentColor"/></svg>`;
+        const btn = (b, cls = "") => `<a class="bn-btn ${cls}" href="${esc(b.link)}">${esc(b.button || "shop now")}</a>`;
+        const ribbon = (t) => { const run = `<span>${esc(t)} · </span>`.repeat(8); return `<div class="bn-ribbon" aria-hidden="true"><div class="bn-ribbon__run">${run}${run}</div></div>`; };
+        const LAYOUT = {
+          welcome: (b) => `
+            <div class="bn-stripes"></div>${ribbon(b.ribbon || "")}
+            <div class="bn-in bn-welcome">
+              <div class="bn-welcome__words">
+                <p class="bn-kicker">${esc(b.kicker || "")} ${spark("bn-spark--a")}</p>
+                <img class="bn-logo" src="images/logo.webp" alt="Sentimental Apple">
+                <p class="bn-tagline">${esc(b.tagline || "")} <span aria-hidden="true">˙⋆✮⋆˙</span></p>
+                <a class="bn-button" href="${esc(b.link)}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="var(--c-pink, #f6a9cb)" stroke="var(--c-deep, #de4e93)" stroke-width="4"/><circle cx="50" cy="50" r="33" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3"/><g fill="#fff"><circle cx="41" cy="41" r="6"/><circle cx="59" cy="41" r="6"/><circle cx="41" cy="59" r="6"/><circle cx="59" cy="59" r="6"/></g></svg><span>${esc(b.button || "explore now!")}</span></a>
+              </div>
+              <div class="bn-snaps">${(b.photos || []).slice(0, 2).map((src, k) => `<figure class="bn-snap bn-snap--${k + 1}" tabindex="0">${bow(k ? "bn-bow--teal" : "bn-bow--ink")}<img src="${esc(src)}" alt="" loading="lazy"></figure>`).join("")}</div>
+            </div>${ribbon(b.ribbon || "")}`,
+          sale: (b) => `
+            <div class="bn-stripes bn-stripes--band"></div>
+            <div class="bn-in bn-sale">
+              <div class="bn-film" aria-hidden="true"><div class="bn-film__run">${[...(b.photos || []), ...(b.photos || [])].map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join("")}</div></div>
+              <div class="bn-card bn-card--teal">${bow("bn-bow--l")}${bow("bn-bow--r")}
+                <p class="bn-script">${esc(b.script || "")}</p>
+                <h3 class="bn-tall">${esc(b.title || "")}</h3>
+                ${btn(b, "bn-btn--pink")}
+              </div>
+            </div>`,
+          collection: (b) => `
+            <div class="bn-dots" aria-hidden="true"></div>
+            <div class="bn-in bn-collection">
+              <div class="bn-card bn-card--cream">${bow("bn-bow--soft")}
+                <h3 class="bn-tall">${esc(b.title || "")}</h3>
+                <p class="bn-script bn-script--ink">${esc(b.script || "")} ${spark("bn-spark--b")}</p>
+                <p class="bn-text">${esc(b.text || "")}</p>
+                ${btn(b, "bn-btn--pink")}
+              </div>
+            </div>`,
+          gallery: (b) => `
+            <div class="bn-stripes bn-stripes--pink"></div>
+            <div class="bn-stars" aria-hidden="true">${spark("").repeat(9)}</div>
+            <div class="bn-in bn-gallery">
+              <div class="bn-card bn-card--cream bn-card--split">
+                <div>
+                  <p class="bn-small">${esc(b.kicker || "")}</p>
+                  <h3 class="bn-tall">${esc(b.title || "")}</h3>
+                  <p class="bn-script bn-script--ink">${esc(b.script || "")} ${spark("bn-spark--c")}</p>
+                  <p class="bn-text">${esc(b.text || "")}</p>
+                  ${btn(b, "bn-btn--teal")}
+                </div>
+                ${(b.photos || []).slice(0, 1).map((src) => `<a class="bn-peel" href="${esc(b.link)}" tabindex="-1" aria-hidden="true"><img src="${esc(src)}" alt="" loading="lazy"></a>`).join("")}
+              </div>
+            </div>`,
+        };
+        track.innerHTML = B.map((b) => LAYOUT[b.layout]
+          ? `<div class="bn bn--${b.layout}" role="group" aria-roledescription="slide" aria-label="${esc(b.caption || "")}">${LAYOUT[b.layout](b)}</div>`
+          : `<a class="bn bn--image" href="${esc(b.link)}"><img src="${esc(b.image)}" alt="${esc(b.alt || "")}" loading="lazy"></a>`).join("");
         dots.innerHTML = B.map((_, i) => `<button type="button" aria-label="Show banner ${i + 1}" data-bd="${i}"></button>`).join("");
         let i = 0, t;
+        const slides = $$(".bn", track);
         const go = (k) => {
           i = (k + B.length) % B.length; track.style.transform = `translateX(-${i * 100}%)`;
           $("[data-bcap]").textContent = B[i]?.caption || "";
-          $$("a", track).forEach((a, j) => (a.tabIndex = j === i ? 0 : -1));
+          slides.forEach((el, j) => { el.inert = j !== i; el.classList.toggle("is-on", j === i); });
           $$("[data-bd]").forEach((d, j) => d.setAttribute("aria-current", j === i));
         };
-        const auto = () => { clearInterval(t); if (!reduceMotion && B.length > 1) t = setInterval(() => go(i + 1), 5000); };
+        const auto = () => { clearInterval(t); if (!reduceMotion && B.length > 1) t = setInterval(() => go(i + 1), 6500); };
         $("[data-bprev]").addEventListener("click", () => { go(i - 1); auto(); });
         $("[data-bnext]").addEventListener("click", () => { go(i + 1); auto(); });
         $$("[data-bd]").forEach((d) => d.addEventListener("click", () => { go(+d.dataset.bd); auto(); }));
-        $(".slides").addEventListener("mouseenter", () => clearInterval(t)); $(".slides").addEventListener("mouseleave", auto);
+        const box = $(".slides");
+        box.addEventListener("mouseenter", () => clearInterval(t)); box.addEventListener("mouseleave", auto);
+        box.addEventListener("focusin", () => clearInterval(t));
+        // swipe on phones
+        let x0 = null;
+        box.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+        box.addEventListener("touchend", (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 45) { go(i + (dx < 0 ? 1 : -1)); auto(); } });
+        // polka dots drift away from the pointer
+        const field = $(".bn-dots", track);
+        if (field && !reduceMotion) box.addEventListener("pointermove", (e) => {
+          const r = box.getBoundingClientRect();
+          field.style.setProperty("--mx", ((e.clientX - r.left) / r.width - .5).toFixed(3));
+          field.style.setProperty("--my", ((e.clientY - r.top) / r.height - .5).toFixed(3));
+        });
+        // tap a photo on the welcome banner to bring it to the front
+        $$(".bn-snap", track).forEach((f) => { const front = () => { $$(".bn-snap", track).forEach((o) => o.classList.remove("is-front")); f.classList.add("is-front"); }; f.addEventListener("click", front); f.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); front(); } }); });
         if (B.length) { go(0); auto(); } else $(".hm-banners").remove();
       }
 
