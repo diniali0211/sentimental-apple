@@ -1,0 +1,93 @@
+/* =========================================================
+   SENTIMENTAL APPLE — STYLE THEMES
+   When a shopper picks a style on style.html, <html> gets
+   data-style="coquette" (etc.) and these colours and fonts
+   replace the brand ones across every page.
+   No style picked = the normal Sentimental Apple look.
+   ========================================================= */
+
+/* ---------- Coquette: blush, bows & pearls ---------- */
+[data-style="coquette"] {
+  --c-cream: #fff5f8; --c-paper: #fff9fb; --c-surface: #fff;
+  --c-ink: #5b1f3c; --c-mute: #8a5a72; --c-on-ink: #fff;
+  --c-pink: #f4a6c6; --c-deep: #d6457f; --c-blush: #fde2ec;
+  --c-teal: #c9b6e4; --c-teal-soft: #efe7f8; --line: #f3cfdd;
+  --f-head: "Bodoni Moda"; --f-body: "Hanken Grotesk"; --f-hand: "Great Vibes"; --f-script: "Great Vibes";
+  --theme-pattern: radial-gradient(circle at 12px 12px, rgba(214, 69, 127, .09) 2.5px, transparent 3px) 0 0 / 34px 34px;
+}
+[data-style="coquette"] :is(h1, h2, .sf-name) { font-style: italic; font-weight: 600; letter-spacing: -.01em; }
+
+/* ---------- Cottagecore: sage, linen & wildflowers ---------- */
+[data-style="cottagecore"] {
+  --c-cream: #f6f1e3; --c-paper: #faf6ec; --c-surface: #fffdf7;
+  --c-ink: #3e4a2f; --c-mute: #6b7558; --c-on-ink: #fffdf7;
+  --c-pink: #e8a0a0; --c-deep: #b5543f; --c-blush: #f4dcd3;
+  --c-teal: #9db48a; --c-teal-soft: #e3ebd8; --line: #ded3b8;
+  --f-head: "Fraunces"; --f-body: "Lora"; --f-hand: "Reenie Beanie"; --f-script: "Great Vibes";
+  --theme-pattern: repeating-linear-gradient(45deg, rgba(62, 74, 47, .035) 0 2px, transparent 2px 9px);
+}
+[data-style="cottagecore"] :is(h1, h2, .sf-name) { font-style: italic; font-weight: 600; }
+
+/* ---------- Y2K: bubblegum, chrome & butterflies ---------- */
+[data-style="y2k"] {
+  --c-cream: #fdf2ff; --c-paper: #fef7ff; --c-surface: #fff;
+  --c-ink: #3a1a78; --c-mute: #6a4fa3; --c-on-ink: #fff;
+  --c-pink: #ff8fd8; --c-deep: #e23fb0; --c-blush: #ffd9f3;
+  --c-teal: #6fd6ff; --c-teal-soft: #dcf4ff; --line: #ecc9f7;
+  --f-head: "Rubik Bubbles"; --f-body: "Nunito"; --f-hand: "Reenie Beanie"; --f-script: "Great Vibes";
+  --theme-pattern: radial-gradient(circle at 20% 15%, rgba(111, 214, 255, .22), transparent 40%), radial-gradient(circle at 85% 70%, rgba(255, 95, 200, .18), transparent 45%);
+}
+
+/* ---------- Goth: candlelight, lace & midnight ink (dark) ---------- */
+[data-style="goth"] {
+  color-scheme: dark;
+  --c-cream: #0e0b10; --c-paper: #151017; --c-surface: #1a1420;
+  --c-ink: #efe6ee; --c-mute: #b3a3b4; --c-on-ink: #0e0b10;
+  --c-pink: #b8325f; --c-deep: #d2245a; --c-blush: #2a1823;
+  --c-teal: #6b5b7b; --c-teal-soft: #231c2b; --line: #3a2c3d;
+  --f-head: "UnifrakturMaguntia"; --f-body: "EB Garamond"; --f-hand: "EB Garamond"; --f-script: "UnifrakturMaguntia";
+  --theme-pattern: radial-gradient(ellipse at 50% -10%, rgba(142, 27, 61, .35), transparent 60%);
+}
+
+/* ---------- Cybersigilism: chrome, thorns & sharp lines (dark) ---------- */
+[data-style="cybersigilism"] {
+  color-scheme: dark;
+  --c-cream: #0a0a0c; --c-paper: #101014; --c-surface: #141418;
+  --c-ink: #e8ebf2; --c-mute: #9aa3b5; --c-on-ink: #0a0a0c;
+  --c-pink: #c7cfe0; --c-deep: #ff2fb3; --c-blush: #24202b;
+  --c-teal: #7a8aa6; --c-teal-soft: #1b1d24; --line: #2c2f38;
+  --f-head: "Syne"; --f-body: "Space Grotesk"; --f-hand: "Space Grotesk"; --f-script: "Syne";
+  --theme-pattern: linear-gradient(rgba(199, 207, 224, .05) 1px, transparent 1px) 0 0 / 100% 28px;
+}
+[data-style="cybersigilism"] :is(h1, h2, .sf-name) { font-weight: 800; letter-spacing: -.02em; text-transform: lowercase; }
+
+/* ---------- shared bits for every themed page ---------- */
+html[data-style] body { background: var(--theme-pattern, none), var(--c-cream); background-attachment: fixed; transition: background-color .4s, color .4s; }
+html[data-style] .home, html[data-style] .zine { background: transparent; }
+html[data-style] ::selection { background: var(--c-deep); color: var(--c-on-ink); }
+
+/* glossy pink buttons follow the theme */
+html[data-style] .glossy { background: linear-gradient(180deg, color-mix(in srgb, var(--c-pink) 55%, #fff) 0%, var(--c-pink) 45%, var(--c-deep) 100%); color: var(--c-on-ink); }
+html[data-style="goth"] .glossy, html[data-style="cybersigilism"] .glossy { color: #fff; }
+html[data-style="cybersigilism"] .glossy { background: linear-gradient(180deg, #fbfcff 0%, #c7cfe0 40%, #6f7a91 100%); color: #0a0a0c; }
+
+/* the dark themes: soften drop shadows, keep sticker outlines dark */
+html[data-style="goth"], html[data-style="cybersigilism"] { --sticker: drop-shadow(0 4px 10px rgba(0, 0, 0, .6)); }
+html[data-style="goth"] img:not(.logo img), html[data-style="cybersigilism"] img:not(.logo img) { filter: saturate(.85); }
+html[data-style="goth"] .logo img, html[data-style="cybersigilism"] .logo img { filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 6px rgba(255, 255, 255, .25)); }
+
+/* header chip showing the active style */
+.style-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .75rem; border-radius: 999px; font-size: .82rem; font-weight: 700; text-decoration: none; background: var(--c-blush, #fcd6e7); color: var(--c-ink, #2e2460); border: 1.5px solid var(--c-deep, #de4e93); white-space: nowrap; }
+.style-chip:hover { background: var(--c-pink, #f177ae); color: var(--c-on-ink, #fff); }
+@media (max-width: 760px) { .style-chip span:last-child { display: none; } }
+
+/* themed cursor trail (all pages when a style is on) */
+.theme-trail { position: fixed; pointer-events: none; z-index: 2000; width: 16px; height: 16px; animation: sparkle-fade .8s forwards; }
+@keyframes sparkle-fade { to { opacity: 0; translate: 0 14px; scale: .3; } }
+
+@media (prefers-reduced-motion: reduce) { html[data-style] body { transition: none; } }
+
+/* small fixes for drawings that use the brand navy directly */
+html[data-style] .icon-btn svg [stroke="#2e2460"] { stroke: currentColor; }
+html[data-style="goth"] .home .hm-peek-hint, html[data-style="cybersigilism"] .home .hm-peek-hint { font-size: 17px; font-style: italic; }
+html[data-style="cybersigilism"] .btn:not(.btn--plain) { color: #0a0a0c; }
