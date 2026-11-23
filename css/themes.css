@@ -91,3 +91,7 @@ html[data-style="goth"] .logo img, html[data-style="cybersigilism"] .logo img { 
 html[data-style] .icon-btn svg [stroke="#2e2460"] { stroke: currentColor; }
 html[data-style="goth"] .home .hm-peek-hint, html[data-style="cybersigilism"] .home .hm-peek-hint { font-size: 17px; font-style: italic; }
 html[data-style="cybersigilism"] .btn:not(.btn--plain) { color: #0a0a0c; }
+
+/* homepage banners pick up the style's colours */
+html[data-style] .home .hm-banners { --bn-cream: var(--c-paper); --bn-wine: var(--c-deep); }
+html[data-style="cybersigilism"] .home .bn-btn { color: #0a0a0c; }
