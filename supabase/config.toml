@@ -1,7 +1,0 @@
-# Settings for the Supabase CLI (only needed if you deploy with the CLI).
-
-[functions.create-checkout]
-verify_jwt = false   # guests can check out without logging in
-
-[functions.stripe-webhook]
-verify_jwt = false   # Stripe calls this directly; the function checks Stripe's signature instead
