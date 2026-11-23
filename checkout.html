@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Check out | Sentimental Apple</title>
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <script src="js/theme.js"></script>
+</head>
+<body data-page="checkout">
+<main id="main" class="wrap">
+  <div class="page-hero"><h1>Almost yours</h1><p>Tell us where to send it. We'll reply with payment details within a day.</p></div>
+  <div class="checkout" data-checkout>
+    <form class="form" data-checkout-form>
+      <label>Your name<input class="field" name="name" required autocomplete="name"></label>
+      <label>Email<input class="field" name="email" type="email" required autocomplete="email"></label>
+      <label>Delivery address<textarea class="field" name="address" required autocomplete="street-address"></textarea></label>
+      <label>A note for us (optional)<textarea class="field" name="note" placeholder="Gift message, favourite colour, anything"></textarea></label>
+      <button class="btn btn--teal" type="submit" style="justify-self:start" data-checkout-submit>Send my order</button>
+    </form>
+    <aside class="summary" data-summary></aside>
+  </div>
+</main>
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
